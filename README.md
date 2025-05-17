@@ -1,14 +1,14 @@
 # Pharos Testnet BOT
 Pharos Testnet BOT
 
-- Register Here : [Pharos Testnet](https://testnet.pharosnetwork.xyz/experience?inviteCode=PNFXEcz1CWezuu3g)
+- Register Here : [Pharos Testnet](https://testnet.pharosnetwork.xyz/experience?inviteCode=5CKM9X0RSdKTJwzK)
 - Connect New Wallet
 - Connect X & Discord Account
 
 ## Features
 
   - Auto Get Account Information
-  - Auto Run With [Monosans](https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/all.txt) Proxy - `Choose 1`
+  - Auto Run With [Monosans] Proxy - `Choose 1`
   - Auto Run With Private Proxy - `Choose 2`
   - Auto Run Without Proxy - `Choose 3`
   - Auto Rotate Invalid Proxies - `y` or `n`
@@ -27,7 +27,7 @@ Pharos Testnet BOT
 
 1. **Clone The Repositories:**
    ```bash
-   git clone https://github.com/vonssy/PharosTestnet-BOT.git
+   git clone https://github.com/mr1992vhy/PharosTestnet-BOT.git
    ```
    ```bash
    cd PharosTestnet-BOT
