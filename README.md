@@ -17,7 +17,7 @@ Pharos Testnet BOT
   - Auto Make Transfer to Random Address
   - Multi Accounts
 
-### Note: Other features will be update soon.
+ 
 
 ## Requiremnets
 
