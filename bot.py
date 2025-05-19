@@ -400,6 +400,7 @@ class PharosTestnet:
         tx_count = 0
         tx_amount = 0
         wrap_amount = 0
+        swap_count = 0
         wrap_option = None
         rotate = False
 
@@ -409,20 +410,22 @@ class PharosTestnet:
                 print(f"{Fore.WHITE + Style.BRIGHT}1. Check-In, Claim Faucet, and Send to Friends{Style.RESET_ALL}")
                 print(f"{Fore.WHITE + Style.BRIGHT}2. Wrapped PHRS to WPHRS - Unwrapped WPHRS to PHRS{Style.RESET_ALL}")
                 print(f"{Fore.WHITE + Style.BRIGHT}3. Swap WPHRS to USDC - USDC to WPHRS{Style.RESET_ALL}")
-                option = int(input(f"{Fore.BLUE + Style.BRIGHT}Choose [1/2/3] -> {Style.RESET_ALL}").strip())
+                print(f"{Fore.WHITE + Style.BRIGHT}4. Run All Features{Style.RESET_ALL}")
+                option = int(input(f"{Fore.BLUE + Style.BRIGHT}Choose [1/2/3/4] -> {Style.RESET_ALL}").strip())
 
-                if option in [1, 2, 3]:
+                if option in [1, 2, 3, 4]:
                     option_type = (
                         "Check-In, Claim Faucet, and Send to Friends" if option == 1 else 
                         "Wrapped PHRS to WPHRS" if option == 2 else 
-                        "Swap WPHRS to USDC - USDC to WPHRS"
+                        "Swap WPHRS to USDC - USDC to WPHRS" if option == 3 else
+                        "Run All Features"
                     )
                     print(f"{Fore.GREEN + Style.BRIGHT}{option_type} Selected.{Style.RESET_ALL}")
                     break
                 else:
-                    print(f"{Fore.RED + Style.BRIGHT}Please enter either 1, 2 or 3.{Style.RESET_ALL}")
+                    print(f"{Fore.RED + Style.BRIGHT}Please enter either 1, 2, 3, or 4.{Style.RESET_ALL}")
             except ValueError:
-                print(f"{Fore.RED + Style.BRIGHT}Invalid input. Enter a number (1, 2 or 3).{Style.RESET_ALL}")
+                print(f"{Fore.RED + Style.BRIGHT}Invalid input. Enter a number (1, 2, 3, or 4).{Style.RESET_ALL}")
 
         if option == 1:
             while True:
@@ -476,10 +479,73 @@ class PharosTestnet:
                     print(f"{Fore.RED + Style.BRIGHT}Invalid input. Enter a float or decimal number.{Style.RESET_ALL}")
 
         elif option == 3:
-             while True:
+            while True:
                 try:
-                    tx_count = int(input(f"{Fore.YELLOW + Style.BRIGHT}How Many Times Do You Want To Make a Swap? -> {Style.RESET_ALL}").strip())
+                    swap_count = int(input(f"{Fore.YELLOW + Style.BRIGHT}How Many Times Do You Want To Make a Swap? -> {Style.RESET_ALL}").strip())
+                    if swap_count > 0:
+                        break
+                    else:
+                        print(f"{Fore.RED + Style.BRIGHT}Please enter positive number.{Style.RESET_ALL}")
+                except ValueError:
+                    print(f"{Fore.RED + Style.BRIGHT}Invalid input. Enter a number.{Style.RESET_ALL}")
+
+        elif option == 4:
+            while True:
+                try:
+                    tx_count = int(input(f"{Fore.YELLOW + Style.BRIGHT}How Many Times Do You Want To Make a Transfer? -> {Style.RESET_ALL}").strip())
                     if tx_count > 0:
+                        break
+                    else:
+                        print(f"{Fore.RED + Style.BRIGHT}Please enter positive number.{Style.RESET_ALL}")
+                except ValueError:
+                    print(f"{Fore.RED + Style.BRIGHT}Invalid input. Enter a number.{Style.RESET_ALL}")
+
+            while True:
+                try:
+                    tx_amount = float(input(f"{Fore.YELLOW + Style.BRIGHT}Enter Amount for Each Transfers [1 or 0.01 or 0.001, etc in decimals] -> {Style.RESET_ALL}").strip())
+                    if tx_amount > 0:
+                        break
+                    else:
+                        print(f"{Fore.RED + Style.BRIGHT}Please enter positive amount.{Style.RESET_ALL}")
+                except ValueError:
+                    print(f"{Fore.RED + Style.BRIGHT}Invalid input. Enter a float or decimal number.{Style.RESET_ALL}")
+
+            while True:
+                try:
+                    print(f"{Fore.GREEN + Style.BRIGHT}Select Option:{Style.RESET_ALL}")
+                    print(f"{Fore.WHITE + Style.BRIGHT}1. Wrapped PHRS to WPHRS{Style.RESET_ALL}")
+                    print(f"{Fore.WHITE + Style.BRIGHT}2. Unwrapped WPHRS to PHRS{Style.RESET_ALL}")
+                    print(f"{Fore.WHITE + Style.BRIGHT}3. Skipped{Style.RESET_ALL}")
+                    wrap_option = int(input(f"{Fore.BLUE + Style.BRIGHT}Choose [1/2/3] -> {Style.RESET_ALL}").strip())
+
+                    if wrap_option in [1, 2, 3]:
+                        wrap_type = (
+                            "Wrapped PHRS to WPHRS" if wrap_option == 1 else 
+                            "Unwrapped WPHRS to PHRS" if wrap_option == 2 else
+                            "Skipped"
+                        )
+                        print(f"{Fore.GREEN + Style.BRIGHT}{wrap_type} Selected.{Style.RESET_ALL}")
+                        break
+                    else:
+                        print(f"{Fore.RED + Style.BRIGHT}Please enter either 1, 2, or 3.{Style.RESET_ALL}")
+                except ValueError:
+                    print(f"{Fore.RED + Style.BRIGHT}Invalid input. Enter a number (1, 2, or 3).{Style.RESET_ALL}")
+
+            if wrap_option in [1, 2]:
+                while True:
+                    try:
+                        wrap_amount = float(input(f"{Fore.YELLOW + Style.BRIGHT}Enter Amount [1 or 0.01 or 0.001, etc in decimals] -> {Style.RESET_ALL}").strip())
+                        if wrap_amount > 0:
+                            break
+                        else:
+                            print(f"{Fore.RED + Style.BRIGHT}Please enter positive amount.{Style.RESET_ALL}")
+                    except ValueError:
+                        print(f"{Fore.RED + Style.BRIGHT}Invalid input. Enter a float or decimal number.{Style.RESET_ALL}")
+
+            while True:
+                try:
+                    swap_count = int(input(f"{Fore.YELLOW + Style.BRIGHT}How Many Times Do You Want To Make a Swap? -> {Style.RESET_ALL}").strip())
+                    if swap_count > 0:
                         break
                     else:
                         print(f"{Fore.RED + Style.BRIGHT}Please enter positive number.{Style.RESET_ALL}")
@@ -516,7 +582,7 @@ class PharosTestnet:
                 else:
                     print(f"{Fore.RED + Style.BRIGHT}Invalid input. Enter 'y' or 'n'.{Style.RESET_ALL}")
 
-        return option, tx_count, tx_amount, wrap_option, wrap_amount, choose, rotate
+        return option, tx_count, tx_amount, wrap_option, wrap_amount, swap_count, choose, rotate
     
     async def check_connection(self, proxy=None):
         connector = ProxyConnector.from_url(proxy) if proxy else None
@@ -844,8 +910,194 @@ class PharosTestnet:
                 f"{Fore.CYAN+Style.BRIGHT}     Status  :{Style.RESET_ALL}"
                 f"{Fore.RED+Style.BRIGHT} Approving Swap Failed {Style.RESET_ALL}"
             )
+
+    async def process_option_1(self, account: str, address: str, url_login: str, tx_count: int, tx_amount: float, use_proxy: bool):
+        token = await self.process_user_login(address, url_login, use_proxy)
+        if token:
+            proxy = self.get_next_proxy_for_account(address) if use_proxy else None
+            self.log(
+                f"{Fore.CYAN+Style.BRIGHT}Status    :{Style.RESET_ALL}"
+                f"{Fore.GREEN+Style.BRIGHT} Login Success {Style.RESET_ALL}"
+            )
+
+            points = "N/A"
+            profile = await self.user_profile(address, token, proxy)
+            if profile and profile.get("msg") == "ok":
+                points = profile.get("data", {}).get("user_info", {}).get("TotalPoints", 0)
+
+            self.log(
+                f"{Fore.CYAN+Style.BRIGHT}Balance   :{Style.RESET_ALL}"
+                f"{Fore.WHITE+Style.BRIGHT} {points} PTS {Style.RESET_ALL}"
+            )
+
+            sign_in = await self.sign_in(address, token, proxy)
+            if sign_in and sign_in.get("msg") == "ok":
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}Check-In  :{Style.RESET_ALL}"
+                    f"{Fore.GREEN+Style.BRIGHT} Claimed Successfully {Style.RESET_ALL}"
+                )
+            elif sign_in and sign_in.get("msg") == "already signed in today":
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}Check-In  :{Style.RESET_ALL}"
+                    f"{Fore.YELLOW+Style.BRIGHT} Already Claimed {Style.RESET_ALL}"
+                )
+            else:
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}Check-In  :{Style.RESET_ALL}"
+                    f"{Fore.RED+Style.BRIGHT} Not Claimed {Style.RESET_ALL}"
+                )
+
+            faucet_status = await self.faucet_status(address, token, proxy)
+            if faucet_status and faucet_status.get("msg") == "ok":
+                is_able = faucet_status.get("data", {}).get("is_able_to_faucet", False)
+
+                if is_able:
+                    claim = await self.claim_faucet(address, token, proxy)
+                    if claim and claim.get("msg") == "ok":
+                        self.log(
+                            f"{Fore.CYAN+Style.BRIGHT}Faucet    :{Style.RESET_ALL}"
+                            f"{Fore.WHITE+Style.BRIGHT} 0.2 PHRS {Style.RESET_ALL}"
+                            f"{Fore.GREEN+Style.BRIGHT}Claimed Successfully{Style.RESET_ALL}"
+                        )
+                    else:
+                        self.log(
+                            f"{Fore.CYAN+Style.BRIGHT}Faucet    :{Style.RESET_ALL}"
+                            f"{Fore.RED+Style.BRIGHT} Not Claimed {Style.RESET_ALL}"
+                        )
+                else:
+                    faucet_available_ts = faucet_status.get("data", {}).get("avaliable_timestamp", None)
+                    faucet_available_wib = datetime.fromtimestamp(faucet_available_ts).astimezone(wib).strftime('%x %X %Z')
+                    self.log(
+                        f"{Fore.CYAN+Style.BRIGHT}Faucet    :{Style.RESET_ALL}"
+                        f"{Fore.YELLOW+Style.BRIGHT} Already Claimed {Style.RESET_ALL}"
+                        f"{Fore.MAGENTA+Style.BRIGHT}-{Style.RESET_ALL}"
+                        f"{Fore.CYAN+Style.BRIGHT} Available at: {Style.RESET_ALL}"
+                        f"{Fore.WHITE+Style.BRIGHT}{faucet_available_wib}{Style.RESET_ALL}"
+                    )
+            else:
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}Faucet    :{Style.RESET_ALL}"
+                    f"{Fore.RED+Style.BRIGHT} GET Eligibility Status Failed {Style.RESET_ALL}"
+                )
+
+            self.log(f"{Fore.CYAN+Style.BRIGHT}Transfer  :{Style.RESET_ALL}")
+            await asyncio.sleep(5)
+
+            for i in range(tx_count):
+                self.log(
+                    f"{Fore.MAGENTA+Style.BRIGHT}   ● {Style.RESET_ALL}"
+                    f"{Fore.GREEN+Style.BRIGHT}Tx - {i+1}{Style.RESET_ALL}"
+                )
+                receiver = self.generate_random_receiver()
+                balance = self.get_token_balance(address, "PHRS")
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}     Balance :{Style.RESET_ALL}"
+                    f"{Fore.WHITE+Style.BRIGHT} {balance} PHRS {Style.RESET_ALL}"
+                )
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}     Amount  :{Style.RESET_ALL}"
+                    f"{Fore.WHITE+Style.BRIGHT} {tx_amount} PHRS {Style.RESET_ALL}"
+                )
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}     Receiver:{Style.RESET_ALL}"
+                    f"{Fore.WHITE+Style.BRIGHT} {receiver} {Style.RESET_ALL}"
+                )
+
+                if balance <= tx_amount:
+                    self.log(
+                        f"{Fore.CYAN+Style.BRIGHT}     Status  :{Style.RESET_ALL}"
+                        f"{Fore.YELLOW+Style.BRIGHT} Insufficient PHRS balance {Style.RESET_ALL}"
+                    )
+                    break
+
+                await self.process_perform_transfer(account, address, token, receiver, tx_amount, use_proxy)
+                await asyncio.sleep(2)
+
+    async def process_option_2(self, account: str, address: str, wrap_option: int, wrap_amount: float):
+        if wrap_option == 1:
+            self.log(f"{Fore.CYAN+Style.BRIGHT}Wrapped   :{Style.RESET_ALL}")
+            balance = self.get_token_balance(address, "PHRS")
+            self.log(
+                f"{Fore.CYAN+Style.BRIGHT}     Balance :{Style.RESET_ALL}"
+                f"{Fore.WHITE+Style.BRIGHT} {balance} PHRS {Style.RESET_ALL}"
+            )
+            self.log(
+                f"{Fore.CYAN+Style.BRIGHT}     Amount  :{Style.RESET_ALL}"
+                f"{Fore.WHITE+Style.BRIGHT} {wrap_amount} PHRS {Style.RESET_ALL}"
+            )
+
+            if balance <= wrap_amount:
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}     Status  :{Style.RESET_ALL}"
+                    f"{Fore.YELLOW+Style.BRIGHT} Insufficient PHRS balance {Style.RESET_ALL}"
+                )
+                return
+            
+            await self.process_perform_wrapped(account, address, wrap_amount)
         
-    async def process_accounts(self, account: str, address: str, url_login: str, option: int, tx_count: int, tx_amount: float, wrap_option: int, wrap_amount: float, use_proxy: bool, rotate_proxy: bool):
+        elif wrap_option == 2:
+            self.log(f"{Fore.CYAN+Style.BRIGHT}Unwrapped :{Style.RESET_ALL}")
+            balance = self.get_token_balance(address, self.WPHRS_CONTRACT_ADDRESS)
+            self.log(
+                f"{Fore.CYAN+Style.BRIGHT}     Balance :{Style.RESET_ALL}"
+                f"{Fore.WHITE+Style.BRIGHT} {balance} WPHRS {Style.RESET_ALL}"
+            )
+            self.log(
+                f"{Fore.CYAN+Style.BRIGHT}     Amount  :{Style.RESET_ALL}"
+                f"{Fore.WHITE+Style.BRIGHT} {wrap_amount} WPHRS {Style.RESET_ALL}"
+            )
+
+            if balance < wrap_amount:
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}     Status  :{Style.RESET_ALL}"
+                    f"{Fore.YELLOW+Style.BRIGHT} Insufficient WPHRS balance {Style.RESET_ALL}"
+                )
+                return
+            
+            await self.process_perform_unwrapped(account, address, wrap_amount)
+
+    async def process_option_3(self, account: str, address: str, swap_count: int):
+        for i in range(swap_count):
+            self.log(
+                f"{Fore.MAGENTA+Style.BRIGHT}   ● {Style.RESET_ALL}"
+                f"{Fore.GREEN+Style.BRIGHT}Swap{Style.RESET_ALL}"
+                f"{Fore.WHITE+Style.BRIGHT} {i+1} / {swap_count} {Style.RESET_ALL}                           "
+            )
+            for swap_option in ["WPHRStoUSDC", "USDCtoWPHRS"]:
+                from_contract_address = self.WPHRS_CONTRACT_ADDRESS if swap_option == "WPHRStoUSDC" else self.USDC_CONTRACT_ADDRESS
+                to_contract_address = self.USDC_CONTRACT_ADDRESS if swap_option == "WPHRStoUSDC" else self.WPHRS_CONTRACT_ADDRESS
+                from_token = "WPHRS" if swap_option == "WPHRStoUSDC" else "USDC"
+                to_token = "USDC" if swap_option == "WPHRStoUSDC" else "WPHRS"
+                swap_amount = 0.005 if swap_option == "WPHRStoUSDC" else 1.5
+
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}     Type    :{Style.RESET_ALL}"
+                    f"{Fore.GREEN+Style.BRIGHT} {from_token} - {to_token} {Style.RESET_ALL}                "
+                )
+
+                balance = self.get_token_balance(address, from_contract_address)
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}     Balance :{Style.RESET_ALL}"
+                    f"{Fore.WHITE+Style.BRIGHT} {balance} {from_token} {Style.RESET_ALL}"
+                )
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}     Amount  :{Style.RESET_ALL}"
+                    f"{Fore.WHITE+Style.BRIGHT} {swap_amount} {from_token} {Style.RESET_ALL}"
+                )
+
+                if balance <= swap_amount:
+                    self.log(
+                        f"{Fore.CYAN+Style.BRIGHT}     Status  :{Style.RESET_ALL}"
+                        f"{Fore.YELLOW+Style.BRIGHT} Insufficient {from_token} balance {Style.RESET_ALL}"
+                    )
+                    break
+
+                await self.process_perform_swap(account, address, from_contract_address, to_contract_address, from_token, to_token, swap_amount)
+                await self.print_timer()
+
+            await asyncio.sleep(2)
+
+    async def process_accounts(self, account: str, address: str, url_login: str, option: int, tx_count: int, tx_amount: float, wrap_option: int, wrap_amount: float, swap_count: int, use_proxy: bool, rotate_proxy: bool):
         is_valid = await self.process_check_connection(address, use_proxy, rotate_proxy)
         if is_valid:
 
@@ -855,210 +1107,46 @@ class PharosTestnet:
                     f"{Fore.BLUE+Style.BRIGHT} Check-In, Claim Faucet, and Send to Friends {Style.RESET_ALL}"
                 )
 
-                token = await self.process_user_login(address, url_login, use_proxy)
-                if token:
-                    proxy = self.get_next_proxy_for_account(address) if use_proxy else None
-                    self.log(
-                        f"{Fore.CYAN+Style.BRIGHT}Status    :{Style.RESET_ALL}"
-                        f"{Fore.GREEN+Style.BRIGHT} Login Success {Style.RESET_ALL}"
-                    )
-
-                    points = "N/A"
-                    profile = await self.user_profile(address, token, proxy)
-                    if profile and profile.get("msg") == "ok":
-                        points = profile.get("data", {}).get("user_info", {}).get("TotalPoints", 0)
-
-                    self.log(
-                        f"{Fore.CYAN+Style.BRIGHT}Balance   :{Style.RESET_ALL}"
-                        f"{Fore.WHITE+Style.BRIGHT} {points} PTS {Style.RESET_ALL}"
-                    )
-
-                    sign_in = await self.sign_in(address, token, proxy)
-                    if sign_in and sign_in.get("msg") == "ok":
-                        self.log(
-                            f"{Fore.CYAN+Style.BRIGHT}Check-In  :{Style.RESET_ALL}"
-                            f"{Fore.GREEN+Style.BRIGHT} Claimed Successfully {Style.RESET_ALL}"
-                        )
-                    elif sign_in and sign_in.get("msg") == "already signed in today":
-                        self.log(
-                            f"{Fore.CYAN+Style.BRIGHT}Check-In  :{Style.RESET_ALL}"
-                            f"{Fore.YELLOW+Style.BRIGHT} Already Claimed {Style.RESET_ALL}"
-                        )
-                    else:
-                        self.log(
-                            f"{Fore.CYAN+Style.BRIGHT}Check-In  :{Style.RESET_ALL}"
-                            f"{Fore.RED+Style.BRIGHT} Not Claimed {Style.RESET_ALL}"
-                        )
-
-                    faucet_status = await self.faucet_status(address, token, proxy)
-                    if faucet_status and faucet_status.get("msg") == "ok":
-                        is_able = faucet_status.get("data", {}).get("is_able_to_faucet", False)
-
-                        if is_able:
-                            claim = await self.claim_faucet(address, token, proxy)
-                            if claim and claim.get("msg") == "ok":
-                                self.log(
-                                    f"{Fore.CYAN+Style.BRIGHT}Faucet    :{Style.RESET_ALL}"
-                                    f"{Fore.WHITE+Style.BRIGHT} 0.2 PHRS {Style.RESET_ALL}"
-                                    f"{Fore.GREEN+Style.BRIGHT}Claimed Successfully{Style.RESET_ALL}"
-                                )
-                            else:
-                                self.log(
-                                    f"{Fore.CYAN+Style.BRIGHT}Faucet    :{Style.RESET_ALL}"
-                                    f"{Fore.RED+Style.BRIGHT} Not Claimed {Style.RESET_ALL}"
-                                )
-                        else:
-                            faucet_available_ts = faucet_status.get("data", {}).get("avaliable_timestamp", None)
-                            faucet_available_wib = datetime.fromtimestamp(faucet_available_ts).astimezone(wib).strftime('%x %X %Z')
-                            self.log(
-                                f"{Fore.CYAN+Style.BRIGHT}Faucet    :{Style.RESET_ALL}"
-                                f"{Fore.YELLOW+Style.BRIGHT} Already Claimed {Style.RESET_ALL}"
-                                f"{Fore.MAGENTA+Style.BRIGHT}-{Style.RESET_ALL}"
-                                f"{Fore.CYAN+Style.BRIGHT} Available at: {Style.RESET_ALL}"
-                                f"{Fore.WHITE+Style.BRIGHT}{faucet_available_wib}{Style.RESET_ALL}"
-                            )
-                    else:
-                        self.log(
-                            f"{Fore.CYAN+Style.BRIGHT}Faucet    :{Style.RESET_ALL}"
-                            f"{Fore.RED+Style.BRIGHT} GET Eligibility Status Failed {Style.RESET_ALL}"
-                        )
-
-                    self.log(f"{Fore.CYAN+Style.BRIGHT}Transfer  :{Style.RESET_ALL}")
-                    await asyncio.sleep(5)
-
-                    for i in range(tx_count):
-                        self.log(
-                            f"{Fore.MAGENTA+Style.BRIGHT}   ● {Style.RESET_ALL}"
-                            f"{Fore.GREEN+Style.BRIGHT}Tx - {i+1}{Style.RESET_ALL}"
-                        )
-                        receiver = self.generate_random_receiver()
-                        balance = self.get_token_balance(address, "PHRS")
-                        self.log(
-                            f"{Fore.CYAN+Style.BRIGHT}     Balance :{Style.RESET_ALL}"
-                            f"{Fore.WHITE+Style.BRIGHT} {balance} PHRS {Style.RESET_ALL}"
-                        )
-                        self.log(
-                            f"{Fore.CYAN+Style.BRIGHT}     Amount  :{Style.RESET_ALL}"
-                            f"{Fore.WHITE+Style.BRIGHT} {tx_amount} PHRS {Style.RESET_ALL}"
-                        )
-                        self.log(
-                            f"{Fore.CYAN+Style.BRIGHT}     Receiver:{Style.RESET_ALL}"
-                            f"{Fore.WHITE+Style.BRIGHT} {receiver} {Style.RESET_ALL}"
-                        )
-
-                        if balance <= tx_amount:
-                            self.log(
-                                f"{Fore.CYAN+Style.BRIGHT}     Status  :{Style.RESET_ALL}"
-                                f"{Fore.YELLOW+Style.BRIGHT} Insufficient PHRS balance {Style.RESET_ALL}"
-                            )
-                            break
-
-                        await self.process_perform_transfer(account, address, token, receiver, tx_amount, use_proxy)
-                        await asyncio.sleep(2)
+                await self.process_option_1(account, address, url_login, tx_count, tx_amount, use_proxy)
 
             elif option == 2:
-                if wrap_option == 1:
-                    self.log(
-                        f"{Fore.CYAN+Style.BRIGHT}Option    :{Style.RESET_ALL}"
-                        f"{Fore.BLUE+Style.BRIGHT} Wrapped PHRS to WPHRS {Style.RESET_ALL}"
-                    )
-                    self.log(f"{Fore.CYAN+Style.BRIGHT}Wrapped   :{Style.RESET_ALL}")
-                    balance = self.get_token_balance(address, "PHRS")
-                    self.log(
-                        f"{Fore.CYAN+Style.BRIGHT}     Balance :{Style.RESET_ALL}"
-                        f"{Fore.WHITE+Style.BRIGHT} {balance} PHRS {Style.RESET_ALL}"
-                    )
-                    self.log(
-                        f"{Fore.CYAN+Style.BRIGHT}     Amount  :{Style.RESET_ALL}"
-                        f"{Fore.WHITE+Style.BRIGHT} {wrap_amount} PHRS {Style.RESET_ALL}"
-                    )
+                wrap_type = "Wrapped PHRS to WPHRS" if wrap_option == 1 else "Unwrapped WPHRS to PHRS"
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}Option    :{Style.RESET_ALL}"
+                    f"{Fore.BLUE+Style.BRIGHT} {wrap_type} {Style.RESET_ALL}"
+                )
+                
+                await self.process_option_2(account, address, wrap_option, wrap_amount)
 
-                    if balance <= wrap_amount:
-                        self.log(
-                            f"{Fore.CYAN+Style.BRIGHT}     Status  :{Style.RESET_ALL}"
-                            f"{Fore.YELLOW+Style.BRIGHT} Insufficient PHRS balance {Style.RESET_ALL}"
-                        )
-                        return
-                    
-                    await self.process_perform_wrapped(account, address, wrap_amount)
-
-                else:
-                    self.log(
-                        f"{Fore.CYAN+Style.BRIGHT}Option    :{Style.RESET_ALL}"
-                        f"{Fore.BLUE+Style.BRIGHT} Unwrapped WPHRS to PHRS {Style.RESET_ALL}"
-                    )
-                    self.log(f"{Fore.CYAN+Style.BRIGHT}Unwrapped :{Style.RESET_ALL}")
-                    balance = self.get_token_balance(address, self.WPHRS_CONTRACT_ADDRESS)
-                    self.log(
-                        f"{Fore.CYAN+Style.BRIGHT}     Balance :{Style.RESET_ALL}"
-                        f"{Fore.WHITE+Style.BRIGHT} {balance} WPHRS {Style.RESET_ALL}"
-                    )
-                    self.log(
-                        f"{Fore.CYAN+Style.BRIGHT}     Amount  :{Style.RESET_ALL}"
-                        f"{Fore.WHITE+Style.BRIGHT} {wrap_amount} WPHRS {Style.RESET_ALL}"
-                    )
-
-                    if balance < wrap_amount:
-                        self.log(
-                            f"{Fore.CYAN+Style.BRIGHT}     Status  :{Style.RESET_ALL}"
-                            f"{Fore.YELLOW+Style.BRIGHT} Insufficient WPHRS balance {Style.RESET_ALL}"
-                        )
-                        return
-                    
-                    await self.process_perform_unwrapped(account, address, wrap_amount)
-
-            else:
+            elif option == 3:
                 self.log(
                     f"{Fore.CYAN+Style.BRIGHT}Option    :{Style.RESET_ALL}"
                     f"{Fore.BLUE+Style.BRIGHT} Swap WPHRS to USDC - USDC to WPHRS {Style.RESET_ALL}"
                 )
 
-                for i in range(tx_count):
-                    self.log(
-                        f"{Fore.MAGENTA+Style.BRIGHT}   ● {Style.RESET_ALL}"
-                        f"{Fore.GREEN+Style.BRIGHT}Swap{Style.RESET_ALL}"
-                        f"{Fore.WHITE+Style.BRIGHT} {i+1} / {tx_count} {Style.RESET_ALL}                           "
-                    )
-                    for swap_option in ["WPHRStoUSDC", "USDCtoWPHRS"]:
-                        from_contract_address = self.WPHRS_CONTRACT_ADDRESS if swap_option == "WPHRStoUSDC" else self.USDC_CONTRACT_ADDRESS
-                        to_contract_address = self.USDC_CONTRACT_ADDRESS if swap_option == "WPHRStoUSDC" else self.WPHRS_CONTRACT_ADDRESS
-                        from_token = "WPHRS" if swap_option == "WPHRStoUSDC" else "USDC"
-                        to_token = "USDC" if swap_option == "WPHRStoUSDC" else "WPHRS"
-                        swap_amount = 0.005 if swap_option == "WPHRStoUSDC" else 1.5
+                await self.process_option_3(account, address, swap_count)
 
-                        self.log(
-                            f"{Fore.CYAN+Style.BRIGHT}     Type    :{Style.RESET_ALL}"
-                            f"{Fore.GREEN+Style.BRIGHT} {from_token} - {to_token} {Style.RESET_ALL}                "
-                        )
+            else:
+                self.log(
+                    f"{Fore.CYAN+Style.BRIGHT}Option    :{Style.RESET_ALL}"
+                    f"{Fore.BLUE+Style.BRIGHT} Run All Features {Style.RESET_ALL}"
+                )
 
-                        balance = self.get_token_balance(address, from_contract_address)
-                        self.log(
-                            f"{Fore.CYAN+Style.BRIGHT}     Balance :{Style.RESET_ALL}"
-                            f"{Fore.WHITE+Style.BRIGHT} {balance} {from_token} {Style.RESET_ALL}"
-                        )
-                        self.log(
-                            f"{Fore.CYAN+Style.BRIGHT}     Amount  :{Style.RESET_ALL}"
-                            f"{Fore.WHITE+Style.BRIGHT} {swap_amount} {from_token} {Style.RESET_ALL}"
-                        )
+                await self.process_option_1(account, address, url_login, tx_count, tx_amount, use_proxy)
+                await asyncio.sleep(3)
 
-                        if balance <= swap_amount:
-                            self.log(
-                                f"{Fore.CYAN+Style.BRIGHT}     Status  :{Style.RESET_ALL}"
-                                f"{Fore.YELLOW+Style.BRIGHT} Insufficient {from_token} balance {Style.RESET_ALL}"
-                            )
-                            break
+                await self.process_option_2(account, address, wrap_option, wrap_amount)
+                await asyncio.sleep(3)
 
-                        await self.process_perform_swap(account, address, from_contract_address, to_contract_address, from_token, to_token, swap_amount)
-                        await self.print_timer()
-
-                    await asyncio.sleep(2)
+                await self.process_option_3(account, address, swap_count)
+                await asyncio.sleep(3)
 
     async def main(self):
         try:
             with open('accounts.txt', 'r') as file:
                 accounts = [line.strip() for line in file if line.strip()]
             
-            option, tx_count, tx_amount, wrap_option, wrap_amount, use_proxy_choice, rotate_proxy = self.print_question()
+            option, tx_count, tx_amount, wrap_option, wrap_amount, swap_count, use_proxy_choice, rotate_proxy = self.print_question()
 
             while True:
                 use_proxy = False
@@ -1089,11 +1177,11 @@ class PharosTestnet:
                                     f"{Fore.WHITE + Style.BRIGHT} {self.mask_account(address)} {Style.RESET_ALL}"
                                     f"{Fore.CYAN + Style.BRIGHT}]{separator}{Style.RESET_ALL}"
                                 )
-                                await self.process_accounts(account, address, url_login, option, tx_count, tx_amount, wrap_option, wrap_amount, use_proxy, rotate_proxy)
+                                await self.process_accounts(account, address, url_login, option, tx_count, tx_amount, wrap_option, wrap_amount, swap_count, use_proxy, rotate_proxy)
                                 await asyncio.sleep(3)
 
                 self.log(f"{Fore.CYAN + Style.BRIGHT}={Style.RESET_ALL}"*72)
-                seconds = 24 * 60 * 60
+                seconds = 12 * 60 * 60
                 while seconds > 0:
                     formatted_time = self.format_seconds(seconds)
                     print(
